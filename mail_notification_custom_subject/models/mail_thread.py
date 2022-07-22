@@ -29,7 +29,8 @@ class MailThread(models.AbstractModel):
             if "." not in subtype:
                 subtype = "mail.%s" % subtype
             subtype_id = self.env["ir.model.data"].xmlid_to_res_id(
-                subtype, raise_if_not_found=False,
+                subtype,
+                raise_if_not_found=False,
             )
         if subtype_id:
             custom_subjects = self.env["mail.message.custom.subject"].search(
@@ -37,7 +38,8 @@ class MailThread(models.AbstractModel):
             )
             if not subject:
                 subject = "Re: %s" % self.env["mail.message"].with_context(
-                    default_model=self._name, default_res_id=self.id,
+                    default_model=self._name,
+                    default_res_id=self.id,
                 )._get_record_name({})
             for template in custom_subjects:
                 try:

@@ -68,7 +68,7 @@ class TestIrMailServer(TransactionCase):
         self.skipTest(reason)
 
     def _delete_mail_servers(self):
-        """ Delete all available mail servers """
+        """Delete all available mail servers"""
         all_mail_servers = self.Model.search([])
         if all_mail_servers:
             all_mail_servers.unlink()
@@ -92,8 +92,7 @@ class TestIrMailServer(TransactionCase):
         return message_from_string(message_string)
 
     def test_send_email_injects_from_no_canonical(self):
-        """It should inject the FROM header correctly when no canonical name.
-        """
+        """It should inject the FROM header correctly when no canonical name."""
         self.message.replace_header("From", "test@example.com")
         message = self._send_mail()
         self.assertEqual(message["From"], self.email_from)

@@ -21,7 +21,9 @@ class MailThread(models.AbstractModel):
             ]
             partner_ids += follower_ids
         return super().message_subscribe(
-            partner_ids=partner_ids, channel_ids=channel_ids, subtype_ids=subtype_ids,
+            partner_ids=partner_ids,
+            channel_ids=channel_ids,
+            subtype_ids=subtype_ids,
         )
 
     @api.model

@@ -138,10 +138,10 @@ class TestMailActivityBoardMethods(TransactionCase):
         return result.get("fields_views").get(action.get("view_mode"))
 
     def test_open_origin_res_partner(self):
-        """ This test case checks
-                - If the method redirects to the form view of the correct one
-                of an object of the 'res.partner' class to which the activity
-                belongs.
+        """This test case checks
+        - If the method redirects to the form view of the correct one
+        of an object of the 'res.partner' class to which the activity
+        belongs.
         """
         # Id of the form view for the class 'crm.lead', type 'lead'
         form_view_partner_id = self.env.ref("base.view_partner_form").id
@@ -165,9 +165,9 @@ class TestMailActivityBoardMethods(TransactionCase):
         self.assertEqual(form_view_partner_id, view.get("view_id"))
 
     def test_redirect_to_activities(self):
-        """ This test case checks
-                - if the method returns the correct action,
-                - if the correct activities are shown.
+        """This test case checks
+        - if the method returns the correct action,
+        - if the correct activities are shown.
         """
         action_id = self.env.ref("mail_activity_board.open_boards_activities").id
         action = self.partner_client.redirect_to_activities(
@@ -195,7 +195,7 @@ class TestMailActivityBoardMethods(TransactionCase):
             self.assertIn(act, self.partner_client.activity_ids.ids)
 
     def test_related_model_instance(self):
-        """ This test case checks the direct access from the activity to the
+        """This test case checks the direct access from the activity to the
         linked model instance
         """
         self.assertEqual(self.act3.related_model_instance, self.partner_client)

@@ -29,7 +29,8 @@ class MailActivity(models.Model):
         """Ask super not to delete the activity and set it to done"""
         self.write({"done": True, "active": False, "date_done": fields.Date.today()})
         return super(
-            MailActivity, self.with_context(mail_activity_done=delete_sentinel),
+            MailActivity,
+            self.with_context(mail_activity_done=delete_sentinel),
         )._action_done(feedback=feedback, attachment_ids=attachment_ids)
 
 

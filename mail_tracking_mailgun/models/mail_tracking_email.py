@@ -213,7 +213,11 @@ class MailTrackingEmail(models.Model):
                 "recipient": email_split(tracking.recipient)[0],
             }
             while url:
-                res = requests.get(url, auth=("api", api_key), params=params,)
+                res = requests.get(
+                    url,
+                    auth=("api", api_key),
+                    params=params,
+                )
                 if not res or res.status_code != 200:
                     raise UserError(_("Couldn't retrieve Mailgun information"))
                 iter_events = res.json().get("items", [])

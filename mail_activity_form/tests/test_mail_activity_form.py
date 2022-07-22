@@ -12,7 +12,7 @@ class TestMailActivityForm(TransactionCase):
         self.partner = self.env["res.partner"].search([], limit=1)
 
     def _create_activity(self, note, activity_type_id=None):
-        """ Create an activity with some default values """
+        """Create an activity with some default values"""
         return (
             self.env["mail.activity"]
             .with_context(
@@ -24,14 +24,18 @@ class TestMailActivityForm(TransactionCase):
         )
 
     def test_evaluation(self):
-        """ Test that expressions evaluate correctly """
+        """Test that expressions evaluate correctly"""
         cell_template = (
             '<td %(p)sid="%%s" %(p)stype="float" %(p)seditable="1">%%s</td>'
         ) % {"p": self.env["mail.activity"]._mail_activity_form_prefix}
         activity = self._create_activity(
             self.activity_type.default_description.replace(
-                cell_template % ("value1", ""), cell_template % ("value1", "1"),
-            ).replace(cell_template % ("value2", ""), cell_template % ("value2", "2"),),
+                cell_template % ("value1", ""),
+                cell_template % ("value1", "1"),
+            ).replace(
+                cell_template % ("value2", ""),
+                cell_template % ("value2", "2"),
+            ),
         )
         result_string = (
             'compute="(value1 + value2 + object[-1:].id) * factor">%s</td>'
@@ -39,7 +43,7 @@ class TestMailActivityForm(TransactionCase):
         self.assertIn(result_string, activity.note)
 
     def test_editable(self):
-        """ Test we're only allowed to edit editable nodes """
+        """Test we're only allowed to edit editable nodes"""
 
         activity = self._create_activity("<div/>")
 
@@ -52,7 +56,8 @@ class TestMailActivityForm(TransactionCase):
         with self.assertRaises(exceptions.UserError):
             self._create_activity(
                 self.activity_type.default_description.replace(
-                    "Value1:", "some other text",
+                    "Value1:",
+                    "some other text",
                 )
             )
         with self.assertRaises(exceptions.UserError):
@@ -72,8 +77,12 @@ class TestMailActivityForm(TransactionCase):
         ) % {"p": self.env["mail.activity"]._mail_activity_form_prefix}
         activity = self._create_activity(
             self.activity_type.default_description.replace(
-                cell_template % ("value1", ""), cell_template % ("value1", "1"),
-            ).replace(cell_template % ("value2", ""), cell_template % ("value2", "2"),),
+                cell_template % ("value1", ""),
+                cell_template % ("value1", "1"),
+            ).replace(
+                cell_template % ("value2", ""),
+                cell_template % ("value2", "2"),
+            ),
         )
         extra_node = "<div>some extra text</div>"
         self.activity_type.default_description += extra_node

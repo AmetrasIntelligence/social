@@ -97,5 +97,6 @@ class MailTrackingController(main.MailTrackingController):
         request.env.uid = 1
         # Process event
         request.env["mail.tracking.email"].sudo()._mailgun_event_process(
-            request.jsonrequest["event-data"], self._request_metadata(),
+            request.jsonrequest["event-data"],
+            self._request_metadata(),
         )

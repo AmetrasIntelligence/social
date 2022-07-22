@@ -12,7 +12,10 @@ class MailTrackingEvent(models.Model):
     ]
 
     mailgun_id = fields.Char(
-        string="Mailgun Event ID", copy="False", readonly=True, index=True,
+        string="Mailgun Event ID",
+        copy="False",
+        readonly=True,
+        index=True,
     )
 
     def _process_data(self, tracking_email, metadata, event_type, state):

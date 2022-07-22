@@ -15,11 +15,10 @@ odoo_version: 13.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups:
-- mail_restrict_follower_selection
+  - mail_restrict_follower_selection
 repo_description: Addons concerning Odoo's social features and messaging in general.
 repo_name: Social addons for Odoo
 repo_slug: social
 repo_website: https://github.com/OCA/social
 travis_apt_packages: []
 travis_apt_sources: []
-

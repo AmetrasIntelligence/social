@@ -39,7 +39,8 @@ class TestAttachExistingAttachment(common.TransactionCase):
     def test_wizard(self):
         compose = Form(
             self.env["mail.compose.message"].with_context(
-                default_res_id=self.partner_01.id, default_model=self.partner_obj._name,
+                default_res_id=self.partner_01.id,
+                default_model=self.partner_obj._name,
             )
         )
         self.assertTrue(compose.can_attach_attachment)

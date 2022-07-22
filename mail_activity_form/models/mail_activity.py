@@ -10,7 +10,7 @@ from odoo.tools.safe_eval import _BUILTINS
 
 
 class ModelProxy(object):
-    """ A wrapper for Odoo models that only exposes fields """
+    """A wrapper for Odoo models that only exposes fields"""
 
     def __init__(self, model):
         self.__model__ = model
@@ -77,7 +77,8 @@ class MailActivity(models.Model):
             and self.env.context.get("_mail_activity_form_update") != self
         ):
             for this, this_values in zip(
-                self.with_context(_mail_activity_form_update=self), result,
+                self.with_context(_mail_activity_form_update=self),
+                result,
             ):
                 activity_type = this.activity_type_id
                 if (
@@ -92,7 +93,8 @@ class MailActivity(models.Model):
                 current = fromstring(this_values["note"])
                 this_values["note"] = lxml_html.tostring(
                     this._mail_activity_form_update(
-                        template, this._mail_activity_form_extract(current),
+                        template,
+                        this._mail_activity_form_extract(current),
                     ),
                 ).decode("utf8")
         return result
@@ -112,11 +114,15 @@ class MailActivity(models.Model):
                 node.text = str(vals.get(node.get(_id)))
             else:
                 node.text = str(
-                    self._mail_activity_form_extract_value(node, vals, compute=True,)
+                    self._mail_activity_form_extract_value(
+                        node,
+                        vals,
+                        compute=True,
+                    )
                 )
-        self.with_context(_mail_activity_form_compute=self,).write(
-            {"note": lxml_html.tostring(doc)}
-        )
+        self.with_context(
+            _mail_activity_form_compute=self,
+        ).write({"note": lxml_html.tostring(doc)})
 
     def _mail_activity_form_assert_template(self):
         """
@@ -178,7 +184,8 @@ class MailActivity(models.Model):
         _id, _editable, _compute, _type = self._mail_activity_form_attributes()
         for node in html.xpath("//*[@%s]" % (_id)):
             node.text = self._mail_activity_form_format_value(
-                values.get(node.attrib[_id]), node.attrib.get(_type),
+                values.get(node.attrib[_id]),
+                node.attrib.get(_type),
             )
         return html
 
@@ -193,7 +200,9 @@ class MailActivity(models.Model):
         # get static values first, do computations thereafter
         for node in html.xpath("//*[@%s]" % (_id)):
             vals[node.get(_id)] = self._mail_activity_form_extract_value(
-                node, vals, compute=False,
+                node,
+                vals,
+                compute=False,
             )
         for node in html.xpath("//*[@%s]" % _compute):
             if not node.get(_id):
@@ -201,7 +210,9 @@ class MailActivity(models.Model):
                 # _compute
                 continue
             vals[node.get(_id)] = self._mail_activity_form_extract_value(
-                node, vals, compute=compute,
+                node,
+                vals,
+                compute=compute,
             )
         return vals
 
@@ -224,7 +235,12 @@ class MailActivity(models.Model):
         Cast value to value_type
         """
         if value_type not in ("float", "int", "str", None):
-            raise exceptions.UserError(_("Value type %s is invalid",) % value_type)
+            raise exceptions.UserError(
+                _(
+                    "Value type %s is invalid",
+                )
+                % value_type
+            )
         return _BUILTINS.get(value_type, _BUILTINS["str"])(value)
 
     def _mail_activity_form_format_value(self, value, value_type):
@@ -238,7 +254,10 @@ class MailActivity(models.Model):
         Evaluate an expression for this activity
         """
         return tools.safe_eval(
-            expression, self._mail_activity_form_eval_context(values,),
+            expression,
+            self._mail_activity_form_eval_context(
+                values,
+            ),
         )
 
     def _mail_activity_form_eval_context(self, values):

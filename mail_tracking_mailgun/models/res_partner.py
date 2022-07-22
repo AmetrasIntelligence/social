@@ -133,7 +133,7 @@ class ResPartner(models.Model):
         ]._mailgun_values()
         for partner in self:
             res = requests.get(
-                urljoin(api_url, "/v3/%s/bounces/%s" % (domain, partner.email)),
+                urljoin(api_url, "/v3/{}/bounces/{}".format(domain, partner.email)),
                 auth=("api", api_key),
             )
             if res.status_code == 200 and not partner.email_bounced:
@@ -169,7 +169,7 @@ class ResPartner(models.Model):
         ]._mailgun_values()
         for partner in self:
             res = requests.delete(
-                urljoin(api_url, "/v3/%s/bounces/%s" % (domain, partner.email)),
+                urljoin(api_url, "/v3/{}/bounces/{}".format(domain, partner.email)),
                 auth=("api", api_key),
             )
             if res.status_code in (200, 404) and partner.email_bounced:

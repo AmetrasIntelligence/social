@@ -4,7 +4,7 @@
 
 
 def pre_init_hook(cr):
-    """ The objective of this hook is to default to false all values of field
+    """The objective of this hook is to default to false all values of field
     'done' of mail.activity
     """
     cr.execute(
@@ -29,9 +29,9 @@ def pre_init_hook(cr):
 
 
 def uninstall_hook(cr, registry):
-    """ The objective of this hook is to remove all activities that are done
-        upon module uninstall
-        """
+    """The objective of this hook is to remove all activities that are done
+    upon module uninstall
+    """
     cr.execute(
         """
         DELETE FROM mail_activity

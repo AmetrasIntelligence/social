@@ -272,7 +272,8 @@ class TestMailActivityTeam(SavepointCase):
         partner_record = self.employee.partner_id.with_user(self.employee.id)
         self.env.ref("mail.mail_activity_data_call").default_team_id = self.team2
         activity = partner_record.activity_schedule(
-            act_type_xmlid="mail.mail_activity_data_call", user_id=self.employee2.id,
+            act_type_xmlid="mail.mail_activity_data_call",
+            user_id=self.employee2.id,
         )
         self.assertEqual(activity.team_id, self.team2)
         self.assertEqual(activity.user_id, self.employee2)
@@ -283,7 +284,9 @@ class TestMailActivityTeam(SavepointCase):
         partner_record = self.employee.partner_id.with_user(self.employee.id)
         self.activity2.default_team_id = self.team2
         self.team2.member_ids = self.employee2
-        activity = partner_record.activity_schedule(activity_type_id=self.activity2.id,)
+        activity = partner_record.activity_schedule(
+            activity_type_id=self.activity2.id,
+        )
         self.assertEqual(activity.team_id, self.team2)
         self.assertEqual(activity.user_id, self.employee2)
 
