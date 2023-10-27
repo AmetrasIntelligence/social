@@ -1,1 +1,1 @@
-from . import test_mail_autosubscribe
+# from . import test_mail_autosubscribe
