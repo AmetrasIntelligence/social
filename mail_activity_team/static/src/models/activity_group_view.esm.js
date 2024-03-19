@@ -8,9 +8,6 @@ registerPatch({
     recordMethods: {
         onClickFilterButton(ev) {
             const _super = this._super.bind(this);
-            if (this.activityMenuViewOwner.currentFilter === "my") {
-                return _super(ev);
-            }
             if (this.activityMenuViewOwner.currentFilter === "team") {
                 this.activityMenuViewOwner.close();
                 const data = _.extend(
@@ -49,6 +46,8 @@ registerPatch({
                         clearBreadcrumbs: true,
                     }
                 );
+            } else {
+                return _super(ev);
             }
         },
     },
